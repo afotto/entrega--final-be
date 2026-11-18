@@ -1,4 +1,4 @@
-import { getAllProductsService, getProductByIdService } from "../services/products.service.js";
+import { createProductService, deleteProductService, getAllProductsService, getProductByIdService } from "../services/products.service.js";
 
 export async function getAllProducts(req, res) {
 
@@ -53,4 +53,68 @@ export async function getProductById(req, res) {
             message: 'El id es necesario'
      })
     }
+}
+
+export async function createProduct(req, res) {
+    const product = req.body;
+    console.log('Producto recibido:', product);
+
+    // Aquí iría la lógica para crear el producto
+    if (product) {
+        try {
+            // Llamar a la función del servicio para crear el producto
+            const createdProduct = await createProductService(product);
+            res.status(201).json({
+                message: 'Producto creado correctamente',
+                data: createdProduct
+            });
+        }
+        catch (error) {
+            res.status(500).json({
+                error: 'Error al crear el producto',
+                message: `Error al crear el producto: ${error}`
+            })
+        }
+    }
+    else {
+        res.status(400).json({
+            error: 'Datos del producto son necesarios',
+            message: 'Se requiere un nuevo producto en el cuerpo de la solicitud'
+        })
+    }
+
+}
+
+
+export async function deleteProduct(req, res) {
+    const id = req.params.id;
+    if (id) {
+        try {
+            // Aquí iría la lógica para eliminar el producto
+            const deletedProduct = await deleteProductService(id);
+            if (deletedProduct) {
+                res.status(200).json({
+                    message: 'Producto eliminado con éxito',
+                    data: deletedProduct
+                });
+            } else {
+                res.status(404).json({
+                    error: 'Producto no encontrado',
+                    message: `No se encontró un producto con el ID ${id}`
+                });
+            }
+        }
+        catch (error) {
+            res.status(500).json({
+                error: 'Error al eliminar el producto',
+                message: `Error al eliminar el producto: ${error}`
+            });
+        }
+    } else {
+        res.status(400).json({
+            error: 'ID del producto es necesario',
+            message: 'Se requiere un ID de producto en la solicitud'
+        });
+    }
+
 }

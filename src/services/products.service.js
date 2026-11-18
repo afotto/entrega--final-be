@@ -1,4 +1,4 @@
-import { getProducts } from "../models/products.models.js";
+import { createProduct, getProducts, deleteProduct } from "../models/products.models.js";
 
 
 export async function getAllProductsService(category) {
@@ -19,3 +19,14 @@ export const getProductByIdService =  async (id) => {
     //console.log(`ID: ${id} producto: ${product.id}`);
     return product;
 }
+
+export const createProductService = async (product) => {
+    const newProduct = await createProduct(product);
+    return newProduct;
+
+}
+
+export const deleteProductService = async (id) => {
+    const deleted = await deleteProduct(id);
+    return deleted;
+};

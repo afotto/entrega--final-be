@@ -44,3 +44,25 @@ export const getProductsByCategory = async (valor) => {
     throw error;
   }
 };
+
+export const createProduct= async (product) => {
+  try {
+    const docRef = await addDoc(collection(db, "products"), product);
+    return { id: docRef.id, ...product};
+  } catch (error) {
+    console.error(`Error creando el producto:`, error);
+    throw error;
+  }
+}
+
+export const deleteProduct = async (id) => {
+  try {
+    const docRef = doc(db, "products", id);
+    const deleted= await deleteDoc(docRef);
+    console.log(`Eliminando producto con ID: ${id} resulado: ${deleted}`);
+    return deleted;
+  } catch (error) {
+    console.error(`Error eliminando el producto:`, error);
+    throw error;
+  }
+}
