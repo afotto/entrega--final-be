@@ -17,7 +17,7 @@ app.use(cors());
 // Configuración avanzada: Permitir dominios específicos 
 const corsOptions = { 
     // Dominios permitidos 
-    origin: ['https://example.com', 'https://entrega-final-4wclcemz9-afo18.vercel.app/'], 
+    origin: ['*', 'https://entrega-final-be.vercel.app/'], 
     // Métodos HTTP permitidos 
     methods: ['GET', 'POST', 'PUT', 'DELETE'], 
     // Encabezados permitidos 
